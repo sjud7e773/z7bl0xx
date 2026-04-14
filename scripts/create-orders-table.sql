@@ -1,0 +1,5 @@
+-- ═══════════════════════════════════════════
+-- z7Blox — OBSOLETO: use fix-orders-rls.sql
+-- Este arquivo é mantido apenas como referência.
+-- Execute fix-orders-rls.sql no Supabase SQL Editor.
+-- ═══════════════════════════════════════════
