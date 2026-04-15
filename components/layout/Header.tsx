@@ -1,19 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Menu, Search, Sun, Moon, ShoppingCart, User } from 'lucide-react'
 import SideDrawer from './SideDrawer'
+import SearchOverlay from './SearchOverlay'
 import { useCartStore } from '@/store/cartStore'
-import { motion, AnimatePresence } from 'framer-motion'
+import { categoryLinks } from '@/lib/navigation'
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isHidden, setIsHidden] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [theme, setTheme] = useState('dark')
-  
+
   const { openCart, items } = useCartStore()
   const [mounted, setMounted] = useState(false)
 
@@ -30,26 +30,7 @@ export default function Header() {
     } else {
       setTheme(document.documentElement.getAttribute('data-theme') || 'dark')
     }
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      if (currentScrollY > 50) {
-        setIsScrolled(true)
-        if (currentScrollY > lastScrollY && !isDrawerOpen) {
-          setIsHidden(true)
-        } else {
-          setIsHidden(false)
-        }
-      } else {
-        setIsScrolled(false)
-        setIsHidden(false)
-      }
-      setLastScrollY(currentScrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY, isDrawerOpen])
+  }, [])
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark'
@@ -85,27 +66,34 @@ export default function Header() {
             >
               <Menu size={24} />
             </button>
-            <Link href="/" className="font-cabin text-xl font-bold tracking-tight text-text-primary hover:text-accent-pink transition-colors">
-              Z7Blox
+            <Link href="/" className="flex items-center text-text-primary hover:text-accent-pink transition-colors">
+              <Image
+                src="/z7blox-logo.svg"
+                alt="Z7Blox"
+                width={152}
+                height={38}
+                priority
+                className="h-9 w-auto"
+              />
             </Link>
           </div>
 
           {/* Center: Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {['Facas', 'Armas', 'Pets', 'Sets'].map((item) => (
+            {categoryLinks.map((item) => (
               <Link
-                key={item}
-                href={`/ + item.toLowerCase() + `}
+                key={item.href}
+                href={item.href}
                 className="font-inter font-medium text-sm text-text-muted hover:text-text-primary hover:underline decoration-accent-pink underline-offset-4 transition-all"
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </nav>
 
           {/* Right: Actions */}
           <div className="flex items-center gap-3 md:gap-4">
-            <button className="text-text-muted hover:text-text-primary transition-colors p-1">
+            <button onClick={() => setIsSearchOpen(true)} className="text-text-muted hover:text-text-primary transition-colors p-1" aria-label="Abrir busca">
               <Search size={20} />
             </button>
 
@@ -140,14 +128,12 @@ export default function Header() {
           <Menu size={20} />
           <span className="font-inter font-medium text-[10px] uppercase tracking-wider">Menu</span>
         </button>
-        <button className="flex flex-col items-center justify-center gap-1 text-text-muted hover:text-text-primary w-16">
+        <button onClick={() => setIsSearchOpen(true)} className="flex flex-col items-center justify-center gap-1 text-text-muted hover:text-text-primary w-16">
           <Search size={20} />
           <span className="font-inter font-medium text-[10px] uppercase tracking-wider">Buscar</span>
         </button>
         <Link href="/" className="flex flex-col items-center justify-center gap-1 text-text-primary hover:text-accent-pink w-16">
-          <div className="w-10 h-10 bg-surface-elevated rounded-full flex items-center justify-center border border-border shadow-sm">
-            <span className="font-cabin font-bold text-lg">Z</span>
-          </div>
+          <Image src="/z7blox-logo.svg" alt="Z7Blox" width={44} height={44} className="h-10 w-auto" />
         </Link>
         <button onClick={openCart} className="flex flex-col items-center justify-center gap-1 text-text-muted hover:text-text-primary w-16 relative">
           <ShoppingCart size={20} />
@@ -158,7 +144,7 @@ export default function Header() {
             </span>
           )}
         </button>
-        <Link href="/conta" className="flex flex-col items-center justify-center gap-1 text-text-muted hover:text-text-primary w-16">
+        <Link href="/login" className="flex flex-col items-center justify-center gap-1 text-text-muted hover:text-text-primary w-16">
           <User size={20} />
           <span className="font-inter font-medium text-[10px] uppercase tracking-wider">Perfil</span>
         </Link>
@@ -170,6 +156,7 @@ export default function Header() {
         theme={theme}
         toggleTheme={toggleTheme}
       />
+      {isSearchOpen && <SearchOverlay onClose={() => setIsSearchOpen(false)} />}
     </>
   )
 }

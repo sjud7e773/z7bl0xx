@@ -51,7 +51,7 @@ export function ThemeSwitcher() {
 
       {open && (
         <div className="theme-dropdown" role="menu">
-          <p className="theme-dropdown-label">Aparíªncia</p>
+          <p className="theme-dropdown-label">Aparência</p>
           {themes.map((t) => (
             <button
               key={t.id}

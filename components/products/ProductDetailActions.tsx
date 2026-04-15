@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { ShoppingCart, Zap, Lock } from 'lucide-react'
 import { useCartStore } from '@/store/cartStore'
 import type { Product } from '@/types'
@@ -9,7 +10,8 @@ interface Props {
 }
 
 export default function ProductDetailActions({ product }: Props) {
-  const { addItem, openCart, setDrawerStep } = useCartStore()
+  const router = useRouter()
+  const { addItem, openCart } = useCartStore()
   const isSoldOut = product.stock === 0
 
   const handleAddToCart = () => {
@@ -21,8 +23,7 @@ export default function ProductDetailActions({ product }: Props) {
   const handleBuyNow = () => {
     if (isSoldOut) return
     addItem(product)
-    openCart()
-    setDrawerStep('roblox')
+    router.push('/checkout')
   }
 
   return (
@@ -49,7 +50,7 @@ export default function ProductDetailActions({ product }: Props) {
         className="text-xs text-center"
         style={{ color: 'var(--text-muted)', fontFamily: 'Inter' }}
       >
-        <Lock size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Pagamento seguro via Stripe Â· Entrega em minutos
+        <Lock size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Pagamento seguro via Stripe · Entrega em minutos
       </p>
     </div>
   )

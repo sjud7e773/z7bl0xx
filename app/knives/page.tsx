@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
-export default function FacasPage() {
+export default function KnivesPage() {
   redirect('/categoria/facas')
 }

@@ -44,6 +44,7 @@ export default async function CategoryPage({ params }: Props) {
   const products = await getProductsByCategory(cat.db, 50)
   const produtos: Produto[] = products.map((p) => ({
     id: p.id,
+    slug: p.slug,
     nome: p.name,
     nomeTraducido: p.name,
     descricao: p.description,

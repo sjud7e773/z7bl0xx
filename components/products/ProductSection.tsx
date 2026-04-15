@@ -66,7 +66,7 @@ export default function ProductSection({ title, icon, products, category }: Prop
             style={{ border: '1px dashed var(--border)', color: 'var(--text-muted)' }}
           >
             <p className="text-lg font-semibold mb-2" style={{ color: 'var(--text-muted)', fontFamily: 'Inter' }}>
-              Nenhum item disponí­vel
+              Nenhum item disponível
             </p>
             <p className="text-sm" style={{ color: 'var(--text-muted)', fontFamily: 'Inter' }}>
               Novos itens chegando em breve!

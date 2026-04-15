@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
+import { categoryLinks, infoLinks } from '@/lib/navigation'
 
 export default function Footer() {
   return (
@@ -7,8 +9,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
           <div className="col-span-1 md:col-span-1 flex flex-col gap-4">
-            <Link href="/" className="font-cabin text-2xl font-bold text-text-primary tracking-tight">
-              Z7Blox
+            <Link href="/" className="flex items-center w-fit text-text-primary tracking-tight">
+              <Image
+                src="/z7blox-logo.svg"
+                alt="Z7Blox"
+                width={168}
+                height={44}
+                className="h-11 w-auto"
+              />
             </Link>
             <p className="font-inter text-text-muted text-sm leading-relaxed max-w-[280px]">
               Itens raros de Murder Mystery 2 com entrega automática no Roblox.
@@ -28,9 +36,9 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="font-inter font-bold text-text-primary text-sm uppercase tracking-widest">Explorar</h4>
             <div className="flex flex-col gap-3">
-              {['Facas', 'Armas', 'Pets', 'Sets'].map(item => (
-                <Link key={item} href={`/ ${item.toLowerCase()}`} className="font-inter text-sm text-text-muted hover:text-accent-pink transition-colors w-fit">
-                  {item}
+              {categoryLinks.map((item) => (
+                <Link key={item.href} href={item.href} className="font-inter text-sm text-text-muted hover:text-accent-pink transition-colors w-fit">
+                  {item.label}
                 </Link>
               ))}
             </div>
@@ -39,9 +47,9 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="font-inter font-bold text-text-primary text-sm uppercase tracking-widest">Empresa</h4>
             <div className="flex flex-col gap-3">
-              {['Como Usar', 'FAQ', 'Suporte', 'Termos de Uso', 'Privacidade', 'Reembolso'].map(item => (
-                <Link key={item} href={`/ ${item.toLowerCase()} `} className="font-inter text-sm text-text-muted hover:text-accent-pink transition-colors w-fit">
-                  {item}
+              {infoLinks.map((item) => (
+                <Link key={item.href} href={item.href} className="font-inter text-sm text-text-muted hover:text-accent-pink transition-colors w-fit">
+                  {item.label}
                 </Link>
               ))}
             </div>

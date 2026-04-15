@@ -1,9 +1,11 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useCartStore } from '@/store/cartStore'
 import { ShoppingCart, Zap } from 'lucide-react'
+import { getProductHref } from '@/lib/navigation'
 import { formatPrice, calcSavings } from '@/lib/utils'
 import type { Produto } from '@/hooks/useProdutos'
 
@@ -12,6 +14,7 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
+  const router = useRouter()
   const { addItem, openCart } = useCartStore()
 
   const precoSeguro = product?.precoFinalBRL ?? product?.precoBRL ?? 0
@@ -30,7 +33,7 @@ export default function ProductCard({ product }: Props) {
     addItem({
       id: product.id,
       name: product.nomeTraducido || product.nome,
-      slug: product.id,
+      slug: product.slug,
       category: product.categoria as 'knives' | 'guns' | 'pets' | 'bundles',
       price: precoSeguro,
       original_price: precoOriginalSeguro,
@@ -48,7 +51,7 @@ export default function ProductCard({ product }: Props) {
     addItem({
       id: product.id,
       name: product.nomeTraducido || product.nome,
-      slug: product.id,
+      slug: product.slug,
       category: product.categoria as 'knives' | 'guns' | 'pets' | 'bundles',
       price: precoSeguro,
       original_price: precoOriginalSeguro,
@@ -58,47 +61,49 @@ export default function ProductCard({ product }: Props) {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
-    openCart()
+    router.push('/checkout')
   }
 
   return (
     <article className="product-card">
       {/* Image wrapper */}
-      <Link href={`/produto/${product.id}`} className="block" style={{ textDecoration: 'none' }}>
-      <div className="card-img-wrap">
-        {economiaBRL > 0 && (
-          <span className="badge-save">
-            ECONOMIZE {formatPrice(economiaBRL)}
-          </span>
-        )}
+      <Link href={getProductHref(product.slug)} className="block" style={{ textDecoration: 'none' }}>
+        <div className="card-img-wrap">
+          {economiaBRL > 0 && (
+            <span className="badge-save">
+              ECONOMIZE {formatPrice(economiaBRL)}
+            </span>
+          )}
 
-        {isSoldOut && (
-          <div className="card-sold-overlay">
-            <span>Esgotado</span>
+          {isSoldOut && (
+            <div className="card-sold-overlay">
+              <span>Esgotado</span>
+            </div>
+          )}
+
+          <div className="relative w-full aspect-square rounded-xl overflow-hidden"
+               style={{
+                 background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent-alt) 38%, var(--bg-card)) 0%, color-mix(in srgb, var(--accent) 26%, var(--bg-card)) 50%, color-mix(in srgb, var(--accent) 48%, var(--bg-base)) 100%)',
+               }}>
+            <Image
+              src={imagemSegura}
+              alt={product.nomeTraducido || product.nome}
+              width={500}
+              height={300}
+              className="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-110"
+              style={{ mixBlendMode: 'multiply' }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.src = 'https://i.ibb.co/f36xqgk/z7blox-logo.png'
+              }}
+            />
           </div>
-        )}
-
-        <div className="relative w-full aspect-square rounded-xl overflow-hidden"
-             style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)' }}>
-          <Image
-            src={imagemSegura}
-            alt={product.nomeTraducido || product.nome}
-            width={500}
-            height={300}
-            className="w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-110"
-            style={{ mixBlendMode: 'multiply' }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.src = 'https://i.ibb.co/f36xqgk/z7blox-logo.png'
-            }}
-          />
         </div>
-      </div>
       </Link>
 
       {/* Info */}
       <div className="card-body">
-        <Link href={`/produto/${product.id}`} style={{ textDecoration: 'none' }}>
+        <Link href={getProductHref(product.slug)} style={{ textDecoration: 'none' }}>
           <h3 className="card-name" title={product.nomeTraducido || product.nome}>
             {product.nomeTraducido || product.nome}
           </h3>

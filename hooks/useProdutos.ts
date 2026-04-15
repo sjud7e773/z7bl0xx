@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 export interface Produto {
   id: string
+  slug: string
   nome: string
   nomeTraducido: string
   descricao: string
@@ -18,6 +19,7 @@ export interface Produto {
 
 interface RawProduto {
   id: string
+  slug?: string
   nome?: string
   nomeTraducido?: string
   descricao?: string
@@ -59,6 +61,7 @@ export function useProdutos() {
 
         const processados: Produto[] = dadosProdutos.map((item: RawProduto) => ({
           id: String(item.id || Math.random().toString(36).substring(7)),
+          slug: String(item.slug || item.id || Math.random().toString(36).substring(7)),
           nome: item.nome || item.nomeTraducido || '',
           nomeTraducido: item.nomeTraducido || item.nome || '',
           descricao: item.descricao || item.descricaoTraduzida || '',

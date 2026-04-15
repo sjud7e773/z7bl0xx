@@ -22,7 +22,7 @@ export default function HomeProducts() {
   if (erro) {
     return (
       <div className="py-16 flex flex-col items-center justify-center">
-        <p className="text-[#ef4444] font-medium">{erro}</p>
+        <p className="font-medium" style={{ color: 'var(--accent-red)', fontFamily: 'Inter' }}>{erro}</p>
       </div>
     )
   }

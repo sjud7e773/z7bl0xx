@@ -18,7 +18,7 @@ const reviews: Review[] = [
     country: 'BR',
     date: 'Feb 03, 2026',
     initials: 'LR',
-    text: 'Melhor loja de MM2 do Brasil. Preços ótimos, entrega na hora, suporte sempre presente. Jí¡ comprei 5 vezes.',
+    text: 'Melhor loja de MM2 do Brasil. Preços ótimos, entrega na hora e suporte sempre presente. Já comprei 5 vezes.',
   },
   {
     id: '3',
@@ -26,7 +26,7 @@ const reviews: Review[] = [
     country: 'BR',
     date: 'Mar 12, 2026',
     initials: 'AC',
-    text: 'Fiquei com medo no começo mas o processo í© tudo automatizado. Recebi meu Godly em 3 minutos. Muito profissional!',
+    text: 'Fiquei com medo no começo, mas o processo é todo automatizado. Recebi meu Godly em 3 minutos. Muito profissional!',
   },
   {
     id: '4',
@@ -34,7 +34,7 @@ const reviews: Review[] = [
     country: 'BR',
     date: 'Mar 28, 2026',
     initials: 'PS',
-    text: 'Atendimento impecí¡vel. Tive um problema e o suporte resolveu na hora. Loja sí©ria e confií¡vel. 5 estrelas!',
+    text: 'Atendimento impecável. Tive um problema e o suporte resolveu na hora. Loja séria e confiável. 5 estrelas!',
   },
 ]
 
@@ -121,7 +121,7 @@ export default function ReviewsSection() {
                     {review.author}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: 'Inter' }}>
-                    {review.country} Â· {review.date}
+                    {review.country} · {review.date}
                   </p>
                 </div>
               </div>

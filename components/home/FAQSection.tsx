@@ -8,27 +8,27 @@ import type { FaqItem } from '@/types'
 const faqs: FaqItem[] = [
   {
     question: 'Comprar itens MM2 na z7Blox pode me banir?',
-    answer: 'Não. A entrega í© feita via trade normal no jogo. Nunca pedimos sua senha ou acesso í  conta. O processo í© 100% dentro das regras do Roblox.',
+    answer: 'Não. A entrega é feita via trade normal no jogo. Nunca pedimos sua senha ou acesso à conta. O processo é 100% dentro das regras do Roblox.',
   },
   {
-    question: 'De onde víªm os itens MM2?',
-    answer: 'Os itens são obtidos via trade e estoque próprio de jogadores coletores. O inventí¡rio pode variar conforme disponibilidade.',
+    question: 'De onde vêm os itens MM2?',
+    answer: 'Os itens são obtidos via trade e estoque próprio de jogadores coletores. O inventário pode variar conforme disponibilidade.',
   },
   {
     question: 'Como recebo meu item após a compra?',
-    answer: 'Após o checkout, vocíª acessa a Claim Page, informa seu usuí¡rio do Roblox e segue o passo a passo para concluir o trade no jogo. Entrega mí©dia de 1 a 5 minutos.',
+    answer: 'Após o checkout, você acessa a página de confirmação, informa seu usuário do Roblox e segue o passo a passo para concluir o trade no jogo. Entrega média de 1 a 5 minutos.',
   },
   {
-    question: 'A z7Blox í© segura para comprar godlys e chromas?',
-    answer: 'Sim. Usamos checkout seguro via Stripe e entregamos atraví©s de trade no jogo. Nunca precisamos da sua senha ou acesso í  conta.',
+    question: 'A z7Blox é segura para comprar godlys e chromas?',
+    answer: 'Sim. Usamos checkout seguro via Stripe e entregamos através de trade no jogo. Nunca precisamos da sua senha ou acesso à conta.',
   },
   {
     question: 'Como faço para resgatar meu pedido MM2?',
     answer: 'Clique aqui para ver o tutorial passo a passo completo do processo de claim após a compra.',
   },
   {
-    question: 'í‰ legal e seguro comprar itens MM2?',
-    answer: 'A entrega í© feita via trade normal no jogo â€” nunca usamos exploits, scripts ou bots. Siga as instruçíµes após o checkout para receber seus itens com segurança.',
+    question: 'É legal e seguro comprar itens MM2?',
+    answer: 'A entrega é feita via trade normal no jogo — nunca usamos exploits, scripts ou bots. Siga as instruções após o checkout para receber seus itens com segurança.',
   },
 ]
 
@@ -107,7 +107,7 @@ export default function FAQSection() {
             className="mt-4 text-base"
             style={{ color: 'var(--text-secondary)', fontFamily: 'Inter' }}
           >
-            Tem díºvidas? Temos respostas!
+            Tem dúvidas? Temos respostas.
           </motion.p>
         </div>
 

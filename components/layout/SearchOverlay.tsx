@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { X, Search, Loader2, Sword, Crosshair, PawPrint, Package } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { categoryLinks, getProductHref } from '@/lib/navigation'
 import { formatPrice } from '@/lib/utils'
 import type { Product } from '@/types'
 
@@ -56,7 +57,7 @@ export default function SearchOverlay({ onClose }: Props) {
   const content = (
     <div
       className="fixed inset-0 z-[200] flex flex-col"
-      style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }}
+      style={{ background: 'color-mix(in srgb, black 70%, transparent)', backdropFilter: 'blur(4px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div
@@ -95,7 +96,7 @@ export default function SearchOverlay({ onClose }: Props) {
             results.map((product) => (
               <Link
                 key={product.id}
-                href={`/produto/${product.slug}`}
+                href={getProductHref(product.slug)}
                 onClick={onClose}
                 className="flex items-center gap-4 px-5 py-3 transition-colors"
                 style={{ textDecoration: 'none', borderBottom: '1px solid var(--border)' }}
@@ -104,7 +105,11 @@ export default function SearchOverlay({ onClose }: Props) {
               >
                 <div
                   className="relative flex-shrink-0 rounded-lg overflow-hidden"
-                  style={{ width: '48px', height: '48px', background: 'linear-gradient(145deg, #1a0535 0%, #0d0020 40%, #1a0040 100%)' }}
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    background: 'linear-gradient(145deg, color-mix(in srgb, var(--accent-alt) 28%, var(--bg-card)) 0%, color-mix(in srgb, var(--bg-base) 88%, black 12%) 40%, color-mix(in srgb, var(--accent) 36%, var(--bg-base)) 100%)',
+                  }}
                 >
                   <Image
                     src={product.image_url}
@@ -124,7 +129,7 @@ export default function SearchOverlay({ onClose }: Props) {
                 </div>
                 <div className="text-right flex-shrink-0">
                   <p className="font-bold text-sm" style={{ color: 'var(--accent)', fontFamily: 'Inter' }}>
-                    R${formatPrice(product.price)}
+                    {formatPrice(product.price)}
                   </p>
                   {product.stock === 0 && (
                     <p className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: 'Inter' }}>Esgotado</p>
@@ -144,12 +149,7 @@ export default function SearchOverlay({ onClose }: Props) {
                 Categorias populares
               </p>
               <div className="flex flex-wrap gap-2">
-                {[
-                  { label: 'Facas', icon: <Sword size={14} />, href: '/categoria/facas' },
-                  { label: 'Guns', icon: <Crosshair size={14} />, href: '/categoria/guns' },
-                  { label: 'Pets', icon: <PawPrint size={14} />, href: '/categoria/pets' },
-                  { label: 'Bundles', icon: <Package size={14} />, href: '/categoria/bundles' },
-                ].map((c) => (
+                {categoryLinks.map((c) => (
                   <Link
                     key={c.href}
                     href={c.href}
@@ -163,7 +163,7 @@ export default function SearchOverlay({ onClose }: Props) {
                       textDecoration: 'none',
                     }}
                   >
-                    {c.icon} {c.label}
+                    {c.href.includes('facas') ? <Sword size={14} /> : c.href.includes('guns') ? <Crosshair size={14} /> : c.href.includes('pets') ? <PawPrint size={14} /> : <Package size={14} />} {c.label}
                   </Link>
                 ))}
               </div>

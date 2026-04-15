@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { X, Sun, Moon, Globe } from 'lucide-react'
+import { categoryLinks } from '@/lib/navigation'
 
 interface SideDrawerProps {
   isOpen: boolean
@@ -43,8 +45,8 @@ export default function SideDrawer({ isOpen, onClose, theme, toggleTheme }: Side
             className="fixed top-0 left-0 bottom-0 w-full md:w-[280px] bg-background z-[200] border-r border-border shadow-2xl flex flex-col"
           >
             <div className="flex items-center justify-between p-6 border-b border-border">
-              <Link href="/" onClick={onClose} className="font-cabin text-xl font-bold text-text-primary tracking-tight">
-                Z7Blox
+              <Link href="/" onClick={onClose} className="flex items-center text-text-primary tracking-tight">
+                <Image src="/z7blox-logo.svg" alt="Z7Blox" width={152} height={38} className="h-9 w-auto" />
               </Link>
               <button onClick={onClose} className="text-text-muted hover:text-text-primary transition-colors">
                 <X size={24} />
@@ -54,21 +56,21 @@ export default function SideDrawer({ isOpen, onClose, theme, toggleTheme }: Side
             <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8">
               <nav className="flex flex-col gap-4">
                 <div className="text-xs font-bold uppercase tracking-widest text-text-muted mb-2">Coleção</div>
-                {['Facas', 'Armas', 'Pets', 'Sets'].map((item) => (
+                {categoryLinks.map((item) => (
                   <Link
-                    key={item}
-                    href={`/${item.toLowerCase()}`}
+                    key={item.href}
+                    href={item.href}
                     onClick={onClose}
                     className="font-inter font-medium text-lg text-text-primary hover:text-accent-pink transition-colors"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 ))}
               </nav>
 
               <nav className="flex flex-col gap-4">
                 <div className="text-xs font-bold uppercase tracking-widest text-text-muted mb-2">Info</div>
-                <Link href="/como-usar" onClick={onClose} className="font-inter font-medium text-lg text-text-primary hover:text-accent-pink transition-colors">Como Usar</Link>
+                <Link href="/como-funciona" onClick={onClose} className="font-inter font-medium text-lg text-text-primary hover:text-accent-pink transition-colors">Como Usar</Link>
                 <Link href="/faq" onClick={onClose} className="font-inter font-medium text-lg text-text-primary hover:text-accent-pink transition-colors">FAQ</Link>
                 <Link href="/suporte" onClick={onClose} className="font-inter font-medium text-lg text-text-primary hover:text-accent-pink transition-colors">Suporte</Link>
               </nav>

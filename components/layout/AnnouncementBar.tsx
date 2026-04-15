@@ -6,14 +6,14 @@ import { Zap, Sword, Lock, X } from 'lucide-react'
 import { abrirChatSuporte } from '@/components/TawkToChat'
 
 const messages: { icon: ReactNode; text: ReactNode }[] = [
-  { icon: <Zap size={14} />, text: 'Entrega Instantanea via Trade no Roblox â€” 100% Seguro' },
-  { icon: <Sword size={14} />, text: 'Godlys, Ancients e Pets com os melhores precos do Brasil' },
-  { icon: <Lock size={14} />, text: 'Pagamento seguro via Stripe â€” Pix, Cartao e mais' },
+  { icon: <Zap size={14} />, text: 'Entrega instantânea via trade no Roblox — 100% segura' },
+  { icon: <Sword size={14} />, text: 'Godlys, Ancients e Pets com preços competitivos no Brasil' },
+  { icon: <Lock size={14} />, text: 'Pagamento seguro via Stripe — Pix, cartão e mais' },
   { 
     icon: <Lock size={14} />, 
     text: (
       <span className="flex items-center gap-2">
-        Precisa de suporte? Fale Conosco!
+        Precisa de suporte? Fale conosco.
         <button 
           onClick={() => abrirChatSuporte()}
           className="ml-1 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-purple-600 to-violet-700 transition-transform hover:scale-105 active:scale-95"

@@ -13,6 +13,9 @@ interface CheckoutItem {
 
 interface CheckoutBody {
   items: CheckoutItem[]
+  email?: string
+  robloxUsername?: string
+  paymentMethod?: 'card' | 'pix'
 }
 
 interface ProdutoMapped {
@@ -27,9 +30,24 @@ interface ProdutoMapped {
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json()) as CheckoutBody
+    const normalizedEmail = body.email?.trim()
+    const normalizedRobloxUsername = body.robloxUsername?.trim()
+    const paymentMethod = body.paymentMethod === 'pix' ? 'pix' : 'card'
 
     if (!body.items || body.items.length === 0) {
       return NextResponse.json({ error: 'Carrinho vazio.' }, { status: 400 })
+    }
+
+    if (!normalizedRobloxUsername) {
+      return NextResponse.json({ error: 'Informe o usuário do Roblox.' }, { status: 400 })
+    }
+
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(normalizedRobloxUsername)) {
+      return NextResponse.json({ error: 'Usuário do Roblox inválido.' }, { status: 400 })
+    }
+
+    if (normalizedEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      return NextResponse.json({ error: 'E-mail inválido.' }, { status: 400 })
     }
 
     const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
@@ -116,13 +134,15 @@ export async function POST(req: NextRequest) {
 
     // Finaliza Stripe setup
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'boleto'],
+      payment_method_types: paymentMethod === 'pix' ? ['pix'] : ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${origin}/pedido/{CHECKOUT_SESSION_ID}/confirmar-roblox`,
-      cancel_url: `${origin}/?canceled=true`,
+      success_url: `${origin}/pedido/{CHECKOUT_SESSION_ID}/confirmar`,
+      cancel_url: `${origin}/checkout?canceled=true`,
+      customer_email: normalizedEmail,
       metadata: {
         itemCount: body.items.length.toString(),
+        robloxUsername: normalizedRobloxUsername,
       },
       custom_fields: [],
       locale: 'pt-BR',

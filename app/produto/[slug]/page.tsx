@@ -8,7 +8,7 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import ProductDetailActions from '@/components/products/ProductDetailActions'
 import { getProductBySlug } from '@/lib/products'
 import { formatPrice } from '@/lib/utils'
-import { AlertTriangle, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 
 interface Props {
   params: Promise<{ slug: string }>

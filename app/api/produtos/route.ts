@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic'
 interface BloxxerItem {
   id: string | number
   name: string
+  slug?: string
   description?: string
   price?: number
   cost?: number
@@ -153,6 +154,9 @@ export async function GET() {
 
           return {
             id: String(item.id || Math.random().toString(36).substring(7)),
+            slug: typeof item.slug === 'string' && item.slug.trim().length > 0
+              ? item.slug
+              : String(item.id || Math.random().toString(36).substring(7)),
             nome: item.name || '',
             nomeTraducido: nomeTraducido || item.name || '',
             descricao: item.description || '',
